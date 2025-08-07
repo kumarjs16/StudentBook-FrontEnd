@@ -40,7 +40,7 @@ const Classcard = () => {
 
   return (
     <div style={{ padding: '24px' }}>
-      <h4 className="display-4 text-primary" style={{ textAlign: 'center', marginBottom: '24px' }}>Student Access</h4>
+      <h4 className="display-4 text-primary" style={{ textAlign: 'center',fontSize: '2.5rem', marginBottom: '24px' }}>Student Access</h4>
     <div style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(5, 300px)', 

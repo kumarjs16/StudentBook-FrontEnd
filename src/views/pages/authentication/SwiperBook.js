@@ -32,25 +32,38 @@ const params = {
 
 const SwiperBook = ({ isRtl }) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle tag='h4' className="display-4 fw-bold text-primary" style={{ textAlign: 'center', marginBottom: '24px' }}>StudentBook AD's</CardTitle>
-      </CardHeader>
-      <CardBody>
-        <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params} className="swiper-autoplay">
-          {[img1, img2, img3, img4].map((img, index) => (
-            <SwiperSlide key={index}>
-             <img
-  src={img}
-  alt={`slide ${index + 1}`}
-  className='img-fluid w-100 object-fit-cover'
-  style={{ height: '350px' }} 
-/>
+    <Card   style={{
+    boxShadow: 'none',
+    border: 'none',
+    backgroundColor: 'transparent'
+  }}>
+<CardHeader className="d-flex justify-content-center border-0 p-0 mb-2">
+  <CardTitle
+    tag='h4'
+    className="fw-bold text-primary text-center"
+    style={{ fontSize: '2.5rem', marginBottom: '16px' }}
+  >
+    StudentBook AD's
+  </CardTitle>
+</CardHeader>
 
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </CardBody>
+      <CardBody className="p-0">
+  <div style={{ maxWidth: '80%', margin: '0 auto' }}>
+    <Swiper dir={isRtl ? 'rtl' : 'ltr'} {...params} className="swiper-autoplay">
+      {[img1, img2, img3, img4].map((img, index) => (
+        <SwiperSlide key={index}>
+          <img
+            src={img}
+            alt={`slide ${index + 1}`}
+            className='img-fluid object-fit-cover d-block mx-auto'
+            style={{ height: '350px', width: '100%' }}
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+</CardBody>
+
     </Card>
   )
 }

@@ -1,5 +1,5 @@
 // ** React Imports
-import { useContext } from 'react'
+import {useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // ** Custom Hooks
@@ -51,6 +51,8 @@ import SwiperBook from './SwiperBook'
 import Classcard from './ClassCard'
 import WhyChooseUs from './WhyChooseUs'
 import Footer from '../../../@core/layouts/components/footer'
+import Register from './Register'
+import LoginBasic from './LoginBasic'
 
 const ToastContent = ({ t, name, role }) => {
   return (
@@ -89,34 +91,40 @@ const Login = () => {
 
   const source = skin === 'dark' ? illustrationsDark : illustrationsLight
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      useJwt
-        .login({ email: data.loginEmail, password: data.password })
-        .then(res => {
-          const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
-          dispatch(handleLogin(data))
-          ability.update(res.data.userData.ability)
-          navigate(getHomeRouteForLoggedInUser(data.role))
-          toast(t => (
-            <ToastContent t={t} role={data.role || 'admin'} name={data.fullName || data.username || 'John Doe'} />
-          ))
-        })
-        .catch(err => setError('loginEmail', {
-            type: 'manual',
-            message: err.response.data.error
-          })
-        )
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
-    }
-  }
+// modals 
+   const [modalOpen, setModalOpen] = useState(false)
+   const [loginModalOpen, setLoginModalOpen] = useState(false)
+  const toggleModal = () => setModalOpen(!modalOpen)
+   const toggleLoginModal = () => setLoginModalOpen(!loginModalOpen)
+
+  // const onSubmit = data => {
+  //   if (Object.values(data).every(field => field.length > 0)) {
+  //     useJwt
+  //       .login({ email: data.loginEmail, password: data.password })
+  //       .then(res => {
+  //         const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
+  //         dispatch(handleLogin(data))
+  //         ability.update(res.data.userData.ability)
+  //         navigate(getHomeRouteForLoggedInUser(data.role))
+  //         toast(t => (
+  //           <ToastContent t={t} role={data.role || 'admin'} name={data.fullName || data.username || 'John Doe'} />
+  //         ))
+  //       })
+  //       .catch(err => setError('loginEmail', {
+  //           type: 'manual',
+  //           message: err.response.data.error
+  //         })
+  //       )
+  //   } else {
+  //     for (const key in data) {
+  //       if (data[key].length === 0) {
+  //         setError(key, {
+  //           type: 'manual'
+  //         })
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     // <div className='auth-wrapper auth-cover'>
@@ -285,54 +293,48 @@ const Login = () => {
       {/* </Row> */}
 
       {/* new code starts here */}
- <div className="hero-wrapper">
-      {/* Top Navigation */}
+    <div className="hero-wrapper" style={{ height: '75px' }}>
       <div className="d-flex align-items-center justify-content-between px-3 py-2">
         <Link className="d-flex align-items-center text-decoration-none" to="/">
-              <svg viewBox='0 0 139 95' version='1.1' height='28'>
+          <svg viewBox="0 0 139 95" version="1.1" height="28">
             <defs>
-              <linearGradient x1='100%' y1='10.5120544%' x2='50%' y2='89.4879456%' id='linearGradient-1'>
-                <stop stopColor='#000000' offset='0%'></stop>
-                <stop stopColor='#FFFFFF' offset='100%'></stop>
+              <linearGradient x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%" id="linearGradient-1">
+                <stop stopColor="#000000" offset="0%" />
+                <stop stopColor="#FFFFFF" offset="100%" />
               </linearGradient>
-              <linearGradient x1='64.0437835%' y1='46.3276743%' x2='37.373316%' y2='100%' id='linearGradient-2'>
-                <stop stopColor='#EEEEEE' stopOpacity='0' offset='0%'></stop>
-                <stop stopColor='#FFFFFF' offset='100%'></stop>
+              <linearGradient x1="64.0437835%" y1="46.3276743%" x2="37.373316%" y2="100%" id="linearGradient-2">
+                <stop stopColor="#EEEEEE" stopOpacity="0" offset="0%" />
+                <stop stopColor="#FFFFFF" offset="100%" />
               </linearGradient>
             </defs>
-            <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
-              <g id='Artboard' transform='translate(-400.000000, -178.000000)'>
-                <g id='Group' transform='translate(400.000000, 178.000000)'>
+            <g fill="none" fillRule="evenodd">
+              <g transform="translate(-400, -178)">
+                <g transform="translate(400, 178)">
                   <path
-                    d='M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z'
-                    id='Path'
-                    className='text-primary'
-                    style={{ fill: 'currentColor' }}
-                  ></path>
+                    d="M0,0 L39.18,0 L69.34,32.25 L101.42,0 L138.78,0 V29.8C137.95,37.35 135.78,42.55 132.26,45.41C128.73,48.28 112.33,64.52 83.06,94.14 H56.27 L6.71,44.41 C2.46,39.98 0.34,35.10 0.34,29.80 C0.34,24.49 0.23,14.56 0,0 Z"
+                    fill="currentColor"
+                    className="text-primary"
+                  />
                   <path
-                    d='M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z'
-                    id='Path'
-                    fill='url(#linearGradient-1)'
-                    opacity='0.2'
-                  ></path>
+                    d="M69.34,32.25 L101.42,0 H138.78 V29.8 C137.95,37.35 135.78,42.55 132.26,45.41 C128.73,48.28 112.33,64.52 83.06,94.14 H56.27 L32.84,70.5 L69.34,32.25 Z"
+                    fill="url(#linearGradient-1)"
+                    opacity="0.2"
+                  />
                   <polygon
-                    id='Path-2'
-                    fill='#000000'
-                    opacity='0.049999997'
-                    points='69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325'
-                  ></polygon>
+                    fill="#000000"
+                    opacity="0.05"
+                    points="69.39 32.42 32.84 70.5 54.04 16.18"
+                  />
                   <polygon
-                    id='Path-2'
-                    fill='#000000'
-                    opacity='0.099999994'
-                    points='69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338'
-                  ></polygon>
+                    fill="#000000"
+                    opacity="0.1"
+                    points="69.39 32.42 32.84 70.5 58.36 20.74"
+                  />
                   <polygon
-                    id='Path-3'
-                    fill='url(#linearGradient-2)'
-                    opacity='0.099999994'
-                    points='101.428699 0 83.0667527 94.1480575 130.378721 47.0740288'
-                  ></polygon>
+                    fill="url(#linearGradient-2)"
+                    opacity="0.1"
+                    points="101.42 0 83.06 94.14 130.37 47.07"
+                  />
                 </g>
               </g>
             </g>
@@ -341,20 +343,32 @@ const Login = () => {
         </Link>
 
         <div>
-          <Link to="/signup">
-            <Button outline color="primary" className="me-2">
-              Sign Up
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button color="primary">Log In</Button>
-          </Link>
+          <Button outline color="primary" className="me-2" onClick={toggleModal}>
+            Sign Up
+          </Button>
+            <Button color="primary" className="me-2" onClick={toggleLoginModal}>Log In</Button>
         </div>
       </div>
+    <Register
+        isOpen={modalOpen}
+        toggle={toggleModal}
+        openLogin={() => {
+          setModalOpen(false)
+          setLoginModalOpen(true)
+        }}
+      />
 
-      {/* Hero Section */}
-      <Container fluid className="d-flex flex-column flex-lg-row align-items-center justify-content-between px-5 pb-5 pt-2 hero-content">
-        {/* Text Content */}
+      <LoginBasic
+        isOpen={loginModalOpen}
+        toggle={toggleLoginModal}
+        openRegister={() => {
+          setLoginModalOpen(false)
+          setModalOpen(true)
+        }}
+      />
+
+    </div>
+       <Container fluid className="d-flex flex-column flex-lg-row align-items-center justify-content-between px-5 pb-5 pt-2 hero-content">
         <div className="text-start pt-5" style={{ maxWidth: '600px' }}>
           <h1 className="display-4 fw-bold">Your Course</h1>
           <h1 className="display-4 fw-bold text-primary">To Success</h1>
@@ -375,12 +389,10 @@ const Login = () => {
           <p className="text-muted mt-3">Trusted by 10,000+ Students Across India</p>
         </div>
 
-        {/* Image */}
         <div className="pt-4 pt-lg-0">
           <img className='img-fluid' src={source} alt='Login Cover' />
         </div>
       </Container>
-    </div>
     <div>
 <SwiperBook/>
 <Classcard/>
