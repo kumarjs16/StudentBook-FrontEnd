@@ -1,8 +1,9 @@
 // ** React Imports
 import { Link, Navigate } from 'react-router-dom'
+// import React, { useState } from 'react'
 
 // ** Reactstrap Imports
-import { Row, Col, CardTitle, CardText, Form, Label, Input, Button } from 'reactstrap'
+// import { Row, Col, CardTitle, CardText, Form, Label, Input, Button } from 'reactstrap'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -20,7 +21,18 @@ import illustrationsDark from '@src/assets/images/pages/forgot-password-v2-dark.
 // ** Styles
 import '@styles/react/pages/page-authentication.scss'
 
-const ForgotPassword = () => {
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button
+} from 'reactstrap'
+
+const ForgotPassword = ({isOpen, toggle}) => {
   // ** Hooks
   const { skin } = useSkin()
 
@@ -29,8 +41,8 @@ const ForgotPassword = () => {
   if (!isUserLoggedIn()) {
     return (
       <div className='auth-wrapper auth-cover'>
-        <Row className='auth-inner m-0'>
-          <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
+        {/* <Row className='auth-inner m-0'> */}
+          {/* <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
             <svg viewBox='0 0 139 95' version='1.1' height='28'>
               <defs>
                 <linearGradient x1='100%' y1='10.5120544%' x2='50%' y2='89.4879456%' id='linearGradient-1'>
@@ -85,8 +97,8 @@ const ForgotPassword = () => {
             <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
               <img className='img-fluid' src={source} alt='Login Cover' />
             </div>
-          </Col>
-          <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+          </Col> */}
+          {/* <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
             <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
               <CardTitle tag='h2' className='fw-bold mb-1'>
                 Forgot Password? 🔒
@@ -112,8 +124,28 @@ const ForgotPassword = () => {
                 </Link>
               </p>
             </Col>
-          </Col>
-        </Row>
+          </Col> */}
+        {/* </Row> */}
+
+{/* new code starts from here  */}
+
+            <Modal isOpen={isOpen} toggle={toggle} centered>
+      <ModalHeader toggle={toggle}>Forgot Password</ModalHeader>
+      <ModalBody>
+        <p className='mb-2'>
+          Enter your email and we&apos;ll send you instructions to reset your password
+        </p>
+        <Form onSubmit={(e) => e.preventDefault()}>
+          <FormGroup>
+            <Label for='forgot-email'>Email</Label>
+            <Input type='email' id='forgot-email' placeholder='Enter your email' required />
+          </FormGroup>
+          <Button color='primary' block>
+            Send Reset Link
+          </Button>
+        </Form>
+      </ModalBody>
+    </Modal>
       </div>
     )
   } else {

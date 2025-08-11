@@ -3,4 +3,7 @@ import dashboards from './dashboards'
 import mainpage from './mainpage'
 
 // ** Merge & Export
-export default [...dashboards, ...mainpage]
+export default [
+  ...dashboards,
+  ...mainpage
+]

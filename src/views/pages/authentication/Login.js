@@ -50,7 +50,6 @@ import '@styles/react/pages/page-authentication.scss'
 import SwiperBook from './SwiperBook'
 import Classcard from './ClassCard'
 import WhyChooseUs from './WhyChooseUs'
-import Footer from '../../../@core/layouts/components/footer'
 import Register from './Register'
 import LoginBasic from './LoginBasic'
 
@@ -397,7 +396,6 @@ const Login = () => {
 <SwiperBook/>
 <Classcard/>
 <WhyChooseUs/>
-<Footer/>
     </div>
 
 

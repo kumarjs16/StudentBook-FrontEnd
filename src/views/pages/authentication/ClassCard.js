@@ -1,70 +1,83 @@
-import { Card, CardBody, CardTitle, CardText, CardFooter, Button } from 'reactstrap'
-
+import { useEffect, useState } from 'react'
+import { Card, CardBody, CardTitle, CardText, Button } from 'reactstrap'
+import { useNavigate } from 'react-router-dom'
 import video1 from '@src/assets/videos/video1.mp4'
 import video2 from '@src/assets/videos/video2.mp4'
 import video3 from '@src/assets/videos/video3.mp4'
 
 const Classcard = () => {
+  const navigate = useNavigate()
+  
   const classData = [
-    {
-      title: 'Class 6',
-      text: 'Start your journey with engaging video lessons.',
-      video: video1,
-      updated: '5 mins ago'
-    },
-    {
-      title: 'Class 7',
-      text: 'Explore topics with fun and visual explanations.',
-      video: video2,
-      updated: '10 mins ago'
-    },
-    {
-      title: 'Class 8',
-      text: 'Strengthen your base with conceptual clarity.',
-      video: video3,
-      updated: '15 mins ago'
-    },
-    {
-      title: 'Class 9',
-      text: 'Level up with smart study and practice content.',
-      video: video3,
-      updated: '15 mins ago'
-    },
-    {
-      title: 'Class 10',
-      text: 'Crack your board exams with expert lessons.',
-      video: video3,
-      updated: '15 mins ago'
-    }
+    { title: 'Class 6', text: 'Start your journey with engaging video lessons.', video: video1 },
+    { title: 'Class 7', text: 'Explore topics with fun and visual explanations.', video: video2 },
+    { title: 'Class 8', text: 'Strengthen your base with conceptual clarity.', video: video3 },
+    { title: 'Class 9', text: 'Level up with smart study and practice content.', video: video3 },
+    { title: 'Class 10', text: 'Crack your board exams with expert lessons.', video: video3 }
   ]
+
+  const [columns, setColumns] = useState(5)
+
+  useEffect(() => {
+    const updateColumns = () => {
+      const width = window.innerWidth
+      if (width < 480) setColumns(1)
+      else if (width < 768) setColumns(2)
+      else if (width < 992) setColumns(3)
+      else if (width < 1200) setColumns(4)
+      else setColumns(5)
+    }
+
+    updateColumns()
+    window.addEventListener('resize', updateColumns)
+    return () => window.removeEventListener('resize', updateColumns)
+  }, [])
+const handleSubscribe = () => {
+  const userData = JSON.parse(localStorage.getItem('userData'))
+  if (userData && userData.accessToken) {
+    navigate('/dashboard/analytics', { replace: true })
+  } else {
+    navigate('/login', { replace: true })
+  }
+}
 
   return (
     <div style={{ padding: '24px' }}>
-      <h4 className="display-4 text-primary" style={{ textAlign: 'center',fontSize: '2.5rem', marginBottom: '24px' }}>Student Access</h4>
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(5, 300px)', 
-      gap: '24px',
-      justifyContent: 'center', 
-      padding: '24px'
-    }}>
-      {classData.map((cls, i) => (
-        <Card key={i} style={{ width: '100%' }}>
-          <video controls width='100%' height='auto'>
-            <source src={cls.video} type='video/mp4' />
-            Your browser does not support the video tag.
-          </video>
-          <CardBody>
-            <CardTitle tag='h4'>{cls.title}</CardTitle>
-            <CardText>{cls.text}</CardText>
-            <Button color='primary' block>Subscribe</Button>
-          </CardBody>
-          {/* <CardFooter>
-            <small className='text-muted'>Last updated {cls.updated}</small>
-          </CardFooter> */}
-        </Card>
-      ))}
-    </div>
+      <h4
+        className="display-4 text-primary"
+        style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '24px' }}
+      >
+        Student Access
+      </h4>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${columns}, 1fr)`,
+          gap: '24px',
+          padding: '24px'
+        }}
+      >
+        {classData.map((cls, i) => (
+          <Card key={i} style={{ width: '100%' }}>
+            <video controls style={{ width: '100%', borderRadius: '4px' }}>
+              <source src={cls.video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <CardBody>
+              <CardTitle tag="h4">{cls.title}</CardTitle>
+              <CardText>{cls.text}</CardText>
+              <Button
+                color="primary"
+                block
+                onClick={handleSubscribe}
+              >
+                Subscribe
+              </Button>
+            </CardBody>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }

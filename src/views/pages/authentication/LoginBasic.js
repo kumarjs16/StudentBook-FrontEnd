@@ -1,4 +1,15 @@
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { useContext } from 'react'
+import { AbilityContext } from '@src/utility/context/Can'
 import { useForm, Controller } from 'react-hook-form'
+import InputPasswordToggle from '@components/input-password-toggle'
+import { handleLogin } from '@store/authentication'
+
+// import useJwt from '@src/auth/jwt/useJwt'
+
+
 import {
   Modal,
   ModalHeader,
@@ -11,51 +22,58 @@ import {
   FormFeedback
 } from 'reactstrap'
 
-import InputPasswordToggle from '@components/input-password-toggle'
-import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
-
 const LoginBasic = ({ isOpen, toggle, openRegister }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const ability = useContext(AbilityContext)
+
   const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    setError
-  } = useForm({
-    defaultValues: {
-      loginEmail: '',
-      password: ''
-    }
-  })
-
-  const onSubmit = (data) => {
-    const users = JSON.parse(localStorage.getItem("users")) || []
-
-    const matchedUser = users.find(
-      (user) => user.email === data.loginEmail && user.password === data.password
-    )
-
-    if (matchedUser) {
-      alert("Login successful!")
-      localStorage.setItem("currentUser", JSON.stringify(matchedUser)) 
-      toggle()
-    } else {
-      const isEmailRegistered = users.some((user) => user.email === data.loginEmail)
-
-      if (!isEmailRegistered) {
-        setError("loginEmail", {
-          type: "manual",
-          message: "Please register to login."
-        })
-      } else {
-        setError("password", {
-          type: "manual",
-          message: "Incorrect password."
-        })
-      }
-    }
+  control,
+  handleSubmit,
+  formState: { errors },
+  setError
+} = useForm({
+  defaultValues: {
+    loginEmail: '',
+    password: ''
   }
+})
 
-  return (
+
+const onSubmit = data => {
+  // Dummy users 
+  const dummyUsers = [
+    { email: 'sunny@gmail.com', password: '123456', fullName: 'Sunny Kumar', role: 'admin' },
+    { email: 'test@gmail.com', password: 'password', fullName: 'Test User', role: 'student' }
+  ]
+
+  const matchedUser = dummyUsers.find(
+    user => user.email === data.loginEmail && user.password === data.password
+  )
+
+  if (matchedUser) {
+    localStorage.setItem('currentUser', JSON.stringify(matchedUser))
+
+    dispatch(handleLogin({
+      ...matchedUser,
+      accessToken: 'dummyAccessToken',
+      refreshToken: 'dummyRefreshToken'
+    }))
+
+    ability.update([{ action: 'manage', subject: 'all' }])
+
+    toggle() 
+    navigate('/dashboard/analytics') // Redirect
+  } else {
+    setError('loginEmail', {
+      type: 'manual',
+      message: 'Email or Password is Invalid'
+    })
+  }
+}
+
+    return (
+    <div>
     <Modal isOpen={isOpen} toggle={toggle} centered>
       <ModalHeader toggle={toggle}>Login</ModalHeader>
       <ModalBody>
@@ -86,7 +104,6 @@ const LoginBasic = ({ isOpen, toggle, openRegister }) => {
             {errors.loginEmail && <FormFeedback>{errors.loginEmail.message}</FormFeedback>}
           </div>
 
-          {/* Password */}
           <div className="mb-2">
             <Label for="loginPassword">Password</Label>
             <Controller
@@ -114,9 +131,13 @@ const LoginBasic = ({ isOpen, toggle, openRegister }) => {
                 Remember me
               </Label>
             </div>
-            <a href="#" className="text-primary small" onClick={(e) => e.preventDefault()}>
-              Forgot password?
-            </a>
+           <a href="#" className="text-primary small" onClick={(e) => {
+          e.preventDefault()
+          toggleForgotModal()
+        }}>
+          Forgot password?
+        </a>
+    
           </div>
 
           <Button color="primary" block type="submit">
@@ -137,8 +158,10 @@ const LoginBasic = ({ isOpen, toggle, openRegister }) => {
           </a>
         </span>
       </ModalFooter>
+      
     </Modal>
+      {/* <ForgotPassword isOpen={forgotModalOpen} toggle={toggleForgotModal}/> */}
+      </div>
   )
 }
-
 export default LoginBasic
