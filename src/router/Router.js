@@ -16,6 +16,7 @@ import { getUserData, getHomeRouteForLoggedInUser } from '../utility/Utils'
 // ** GetRoutes
 import { getRoutes } from './routes'
 
+
 // ** Components
 const Error = lazy(() => import('../views/pages/misc/Error'))
 const Login = lazy(() => import('../views/pages/authentication/Login'))

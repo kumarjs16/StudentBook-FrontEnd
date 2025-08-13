@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Card, CardBody, CardTitle, CardText, Button } from 'reactstrap'
-import { useNavigate } from 'react-router-dom'
 import video1 from '@src/assets/videos/video1.mp4'
 import video2 from '@src/assets/videos/video2.mp4'
 import video3 from '@src/assets/videos/video3.mp4'
+import Register from './Register' // <-- Import Register modal
 
 const Classcard = () => {
-  const navigate = useNavigate()
-  
   const classData = [
     { title: 'Class 6', text: 'Start your journey with engaging video lessons.', video: video1 },
     { title: 'Class 7', text: 'Explore topics with fun and visual explanations.', video: video2 },
@@ -17,6 +15,9 @@ const Classcard = () => {
   ]
 
   const [columns, setColumns] = useState(5)
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false)
+
+  const toggleRegister = () => setIsRegisterOpen(!isRegisterOpen)
 
   useEffect(() => {
     const updateColumns = () => {
@@ -32,14 +33,17 @@ const Classcard = () => {
     window.addEventListener('resize', updateColumns)
     return () => window.removeEventListener('resize', updateColumns)
   }, [])
-const handleSubscribe = () => {
-  const userData = JSON.parse(localStorage.getItem('userData'))
-  if (userData && userData.accessToken) {
-    navigate('/dashboard/analytics', { replace: true })
-  } else {
-    navigate('/login', { replace: true })
+
+  const handleSubscribe = () => {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    if (userData && userData.accessToken) {
+      // If already logged in
+      window.location.href = '/dashboard/analytics'
+    } else {
+      // Open Register modal
+      toggleRegister()
+    }
   }
-}
 
   return (
     <div style={{ padding: '24px' }}>
@@ -78,6 +82,16 @@ const handleSubscribe = () => {
           </Card>
         ))}
       </div>
+
+      {/* Register Modal */}
+      <Register
+        isOpen={isRegisterOpen}
+        toggle={toggleRegister}
+        openLogin={() => {
+          toggleRegister()
+          // You can also open Login modal here if you have it
+        }}
+      />
     </div>
   )
 }

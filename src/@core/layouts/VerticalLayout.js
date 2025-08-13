@@ -20,7 +20,7 @@ import themeConfig from '@configs/themeConfig'
 
 import Customizer from '@components/customizer'
 import ScrollToTop from '@components/scrolltop'
-// import FooterComponent from './components/footer'
+import FooterComponent from './components/footer'
 import NavbarComponent from './components/navbar'
 import SidebarComponent from './components/menu/vertical-menu'
 
@@ -29,7 +29,7 @@ import { useRTL } from '@hooks/useRTL'
 import { useSkin } from '@hooks/useSkin'
 import { useLayout } from '@hooks/useLayout'
 import { useNavbarType } from '@hooks/useNavbarType'
-// import { useFooterType } from '@hooks/useFooterType'
+import { useFooterType } from '@hooks/useFooterType'
 import { useNavbarColor } from '@hooks/useNavbarColor'
 
 // ** Styles
@@ -44,7 +44,7 @@ const VerticalLayout = props => {
   const [isRtl, setIsRtl] = useRTL()
   const { skin, setSkin } = useSkin()
   const { navbarType, setNavbarType } = useNavbarType()
-  // const { footerType, setFooterType } = useFooterType()
+  const { footerType, setFooterType } = useFooterType()
   const { navbarColor, setNavbarColor } = useNavbarColor()
   const { layout, setLayout, setLastLayout } = useLayout()
 
@@ -98,11 +98,11 @@ const VerticalLayout = props => {
   }, [])
 
   // ** Vars
-  // const footerClasses = {
-  //   static: 'footer-static',
-  //   sticky: 'footer-fixed',
-  //   hidden: 'footer-hidden'
-  // }
+  const footerClasses = {
+    static: 'footer-static',
+    sticky: 'footer-fixed',
+    hidden: 'footer-hidden'
+  }
 
   const navbarWrapperClasses = {
     floating: 'navbar-floating',
@@ -128,8 +128,8 @@ const VerticalLayout = props => {
       className={classnames(
         `wrapper vertical-layout ${navbarWrapperClasses[navbarType] || 'navbar-floating'
 
-        // } 
-        // ${footerClasses[footerType] || 'footer-static'
+        } 
+        ${footerClasses[footerType] || 'footer-static'
         }`,
         {
           // Modern Menu
@@ -195,13 +195,13 @@ const VerticalLayout = props => {
           setIsRtl={setIsRtl}
           isHidden={isHidden}
           setLayout={setLayout}
-          // footerType={footerType}
+          footerType={footerType}
           navbarType={navbarType}
           setIsHidden={setIsHidden}
           themeConfig={themeConfig}
           navbarColor={navbarColor}
           contentWidth={contentWidth}
-          // setFooterType={setFooterType}
+          setFooterType={setFooterType}
           setNavbarType={setNavbarType}
           setLastLayout={setLastLayout}
           menuCollapsed={menuCollapsed}
@@ -210,13 +210,13 @@ const VerticalLayout = props => {
           setMenuCollapsed={setMenuCollapsed}
         />
       ) : null}
-      {/* <footer
+      <footer
         className={classnames(`footer footer-light ${footerClasses[footerType] || 'footer-static'}`, {
           'd-none': footerType === 'hidden'
         })}
       >
         {footer ? footer : <FooterComponent footerType={footerType} footerClasses={footerClasses} />}
-      </footer> */}
+      </footer>
       
 
       {themeConfig.layout.scrollTop === true ? (

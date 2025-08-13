@@ -52,7 +52,7 @@ const onSubmit = data => {
   )
 
   if (matchedUser) {
-    localStorage.setItem('currentUser', JSON.stringify(matchedUser))
+    localStorage.setItem('userData', JSON.stringify(matchedUser))
 
     dispatch(handleLogin({
       ...matchedUser,

@@ -30,7 +30,7 @@ export const layoutSlice = createSlice({
     layout: themeConfig.layout.type,
     lastLayout: themeConfig.layout.type,
     menuCollapsed: initialMenuCollapsed(),
-    // footerType: themeConfig.layout.footer.type,
+    footerType: themeConfig.layout.footer.type,
     navbarType: themeConfig.layout.navbar.type,
     menuHidden: themeConfig.layout.menu.isHidden,
     contentWidth: themeConfig.layout.contentWidth,
@@ -48,9 +48,9 @@ export const layoutSlice = createSlice({
     handleLayout: (state, action) => {
       state.layout = action.payload
     },
-    // handleFooterType: (state, action) => {
-    //   state.footerType = action.payload
-    // },
+    handleFooterType: (state, action) => {
+      state.footerType = action.payload
+    },
     handleNavbarType: (state, action) => {
       state.navbarType = action.payload
     },
@@ -80,7 +80,7 @@ export const {
   handleLastLayout,
   handleMenuHidden,
   handleNavbarType,
-  // handleFooterType,
+  handleFooterType,
   handleNavbarColor,
   handleContentWidth,
   handleMenuCollapsed

@@ -52,6 +52,7 @@ import Classcard from './ClassCard'
 import WhyChooseUs from './WhyChooseUs'
 import Register from './Register'
 import LoginBasic from './LoginBasic'
+import Footer from '../../../@core/layouts/components/footer'
 
 const ToastContent = ({ t, name, role }) => {
   return (
@@ -396,6 +397,7 @@ const Login = () => {
 <SwiperBook/>
 <Classcard/>
 <WhyChooseUs/>
+<Footer/>
     </div>
 
 

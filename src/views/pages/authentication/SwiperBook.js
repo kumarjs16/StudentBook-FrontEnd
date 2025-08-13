@@ -41,7 +41,7 @@ const SwiperBook = ({ isRtl }) => {
   <CardTitle
     tag='h4'
     className="fw-bold text-primary text-center"
-    style={{ fontSize: '2.5rem', marginBottom: '16px' }}
+    style={{ fontSize: '2.5rem', marginTop: '30px' }}
   >
     StudentBook AD's
   </CardTitle>

@@ -5,7 +5,7 @@ import {
 } from "reactstrap";
 import { BookOpen } from "react-feather";
 import { useNavigate } from "react-router-dom";
-
+import { ChevronRight } from "react-feather";
 const MySubjects = () => {
   const [subjects, setSubjects] = useState([]);
   const navigate = useNavigate();
@@ -74,14 +74,39 @@ const MySubjects = () => {
                     <BookOpen size={16} className="me-1" />
                     <small className="text-muted">{subj.chapters} Chapters</small>
                   </div>
-                  <div className="d-flex justify-content-between">
-                    <Button outline color="secondary" size="sm">
-                      Review
-                    </Button>
-                    <Button color="primary" size="sm">
-                      {subj.progress > 0 ? "Continue" : "Start"}
-                    </Button>
-                  </div>
+
+
+<div className="d-flex gap-3">
+  <Button
+    outline
+    color="secondary"
+    size="sm"
+    className="d-flex align-items-center px-1 py-1"
+    style={{
+      backgroundColor: '#f5f5f5',
+      color: '#6c757d',
+      fontWeight: '500',
+      boxShadow: 'none',
+    }}
+  >
+   Review Course
+  </Button>
+
+  <Button
+    color="primary"
+    size="sm"
+    className="d-flex align-items-center px-1 py-1"
+    style={{
+      backgroundColor: '#f0f0ff',
+      color: '#4f46e5',
+      border: 'none',
+      fontWeight: '500',
+    }}
+  >
+    {subj.progress > 0 ? "Start Course" : "Continue"}
+  </Button>
+</div>
+
                 </CardBody>
               </Card>
             </Col>

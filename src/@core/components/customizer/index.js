@@ -24,14 +24,14 @@ const Customizer = props => {
     isHidden,
     setLayout,
     navbarType,
-    // footerType,
+    footerType,
     navbarColor,
     setIsHidden,
     contentWidth,
     menuCollapsed,
     setLastLayout,
     setNavbarType,
-    // setFooterType,
+    setFooterType,
     setNavbarColor,
     setContentWidth,
     setMenuCollapsed
@@ -148,44 +148,44 @@ const Customizer = props => {
     })
   }
 
-  // // ** Render Footer Type Options
-  // const renderFooterTypeRadio = () => {
-  //   const footerTypeArr = [
-  //     {
-  //       name: 'sticky',
-  //       label: 'Sticky',
-  //       checked: footerType === 'sticky'
-  //     },
-  //     {
-  //       name: 'static',
-  //       label: 'Static',
-  //       checked: footerType === 'static'
-  //     },
-  //     {
-  //       name: 'hidden',
-  //       label: 'Hidden',
-  //       checked: footerType === 'hidden'
-  //     }
-  //   ]
+  // ** Render Footer Type Options
+  const renderFooterTypeRadio = () => {
+    const footerTypeArr = [
+      {
+        name: 'sticky',
+        label: 'Sticky',
+        checked: footerType === 'sticky'
+      },
+      {
+        name: 'static',
+        label: 'Static',
+        checked: footerType === 'static'
+      },
+      {
+        name: 'hidden',
+        label: 'Hidden',
+        checked: footerType === 'hidden'
+      }
+    ]
 
-  //   return footerTypeArr.map((radio, index) => {
-  //     const marginCondition = index !== footerTypeArr.length - 1
+    return footerTypeArr.map((radio, index) => {
+      const marginCondition = index !== footerTypeArr.length - 1
 
-  //     return (
-  //       <div key={index} className={classnames('form-check', { 'mb-2 me-1': marginCondition })}>
-  //         <Input
-  //           type='radio'
-  //           checked={radio.checked}
-  //           id={`footer-${radio.name}`}
-  //           onChange={() => setFooterType(radio.name)}
-  //         />
-  //         <Label className='form-check-label' for={`footer-${radio.name}`}>
-  //           {radio.label}
-  //         </Label>
-  //       </div>
-  //     )
-  //   })
-  // }
+      return (
+        <div key={index} className={classnames('form-check', { 'mb-2 me-1': marginCondition })}>
+          <Input
+            type='radio'
+            checked={radio.checked}
+            id={`footer-${radio.name}`}
+            onChange={() => setFooterType(radio.name)}
+          />
+          <Label className='form-check-label' for={`footer-${radio.name}`}>
+            {radio.label}
+          </Label>
+        </div>
+      )
+    })
+  }
 
   return (
     <div
@@ -334,8 +334,8 @@ const Customizer = props => {
 
         <div className='px-2'>
           <div className='mb-2'>
-            {/* <p className='fw-bold'>Footer Type</p> */}
-            {/* <div className='d-flex'>{renderFooterTypeRadio()}</div> */}
+            <p className='fw-bold'>Footer Type</p>
+            <div className='d-flex'>{renderFooterTypeRadio()}</div>
           </div>
         </div>
       </PerfectScrollbar>

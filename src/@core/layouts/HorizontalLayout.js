@@ -21,7 +21,7 @@ import themeConfig from '@configs/themeConfig'
 import Customizer from '@components/customizer'
 import ScrollToTop from '@components/scrolltop'
 import NavbarComponent from './components/navbar'
-// import FooterComponent from './components/footer'
+import FooterComponent from './components/footer'
 import MenuComponent from './components/menu/horizontal-menu'
 
 // ** Custom Hooks
@@ -29,7 +29,7 @@ import { useRTL } from '@hooks/useRTL'
 import { useSkin } from '@hooks/useSkin'
 import { useLayout } from '@hooks/useLayout'
 import { useNavbarType } from '@hooks/useNavbarType'
-// import { useFooterType } from '@hooks/useFooterType'
+import { useFooterType } from '@hooks/useFooterType'
 import { useNavbarColor } from '@hooks/useNavbarColor'
 
 // ** Styles
@@ -43,7 +43,7 @@ const HorizontalLayout = props => {
   const { skin, setSkin } = useSkin()
   const [isRtl, setIsRtl] = useRTL()
   const { navbarType, setNavbarType } = useNavbarType()
-  // const { footerType, setFooterType } = useFooterType()
+  const { footerType, setFooterType } = useFooterType()
   const { navbarColor, setNavbarColor } = useNavbarColor()
   const { layout, setLayout, setLastLayout } = useLayout()
 
@@ -86,11 +86,11 @@ const HorizontalLayout = props => {
   }, [])
 
   // ** Vars
-  // const footerClasses = {
-  //   static: 'footer-static',
-  //   sticky: 'footer-fixed',
-  //   hidden: 'footer-hidden'
-  // }
+  const footerClasses = {
+    static: 'footer-static',
+    sticky: 'footer-fixed',
+    hidden: 'footer-hidden'
+  }
 
   const navbarWrapperClasses = {
     floating: 'navbar-floating',
@@ -114,8 +114,8 @@ const HorizontalLayout = props => {
       className={classnames(
         `wrapper horizontal-layout horizontal-menu ${navbarWrapperClasses[navbarType] || 'navbar-floating'
 
-        // } ${
-        //   footerClasses[footerType] || 'footer-static'
+        } ${
+          footerClasses[footerType] || 'footer-static'
         } menu-expanded`
       )}
       {...(isHidden ? { 'data-col': '1-column' } : {})}
@@ -186,13 +186,13 @@ const HorizontalLayout = props => {
           setContentWidth={setContentWidth}
         />
       ) : null}
-      {/* <footer
+      <footer
         className={classnames(`footer footer-light ${footerClasses[footerType] || 'footer-static'}`, {
           'd-none': footerType === 'hidden'
         })}
       >
         {footer ? footer : <FooterComponent footerType={footerType} footerClasses={footerClasses} />}
-      </footer> */}
+      </footer>
       
 
       {themeConfig.layout.scrollTop === true ? (
